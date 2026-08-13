@@ -55,7 +55,7 @@ def prueba_cuadrado2():
     print(Cuadrado)
 if __name__ == "__main__":  
     prueba_cuadrado2()
-    
+
 class Persona:
     def __init__(self,nombre,apellido):
         if isinstance(nombre,str):
@@ -82,13 +82,10 @@ class PersonaAleatoria(Persona):
 
     def __init__(self):
         nombre = random.choice(self.NOMBRES)
-        apellido2 = random.choice(self.APELLIDOS)
+        apellido = random.choice(self.APELLIDOS)
         super().__init__(nombre,apellido) #llamar a su clase madre (persona) y llama al init de la clase madre
 
 if __name__ == "__main__":
     persona_aleatoria = PersonaAleatoria()
     print(persona_aleatoria.nombre,persona_aleatoria.apellido)
-
-
-
-
+    print(PersonaAleatoria.NOMBRES)
