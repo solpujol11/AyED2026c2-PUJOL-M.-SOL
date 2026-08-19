@@ -7,3 +7,6 @@ if __name__ == "__main__":
 
     potencia = calcular_potencia_dos_iterativo(9)
     print(f"El resultado es: {potencia}")
+
+    potencia = calcular_potencia_dos_recursivo(9)
+    print(f"El resultado es: {potencia}")
