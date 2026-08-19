@@ -1,5 +1,5 @@
-from modules.guia2 import calcular_potencia_dos_iterativo
 import unittest
+from modules.guia2 import calcular_potencia_dos_iterativo
 
 class Test_CalculadorPotenciaDosIterativo(unittest.TestCase):
     def test_calculo(self):
