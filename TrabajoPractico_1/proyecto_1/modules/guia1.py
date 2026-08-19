@@ -89,3 +89,39 @@ if __name__ == "__main__":
     persona_aleatoria = PersonaAleatoria()
     print(persona_aleatoria.nombre,persona_aleatoria.apellido)
     print(PersonaAleatoria.NOMBRES)
+
+class personaAleatoria(Persona):
+    NOMBRES=["amanda","feli","sol"]
+    APELLIDOS=["epson","franco","cabada","pujol"]
+
+    def __init__(self):
+        nombre = random.choice(self.NOMBRES)
+        apellido = random.choice(self.APELLIDOS)
+        super().__init__(nombre,apellido)
+class CalculadoraIMC:
+    def __init__(self,peso,altura):
+        self.establecer_altura(altura)
+        self.establecer_peso(peso)
+    def establecer_altura(self, altura):
+        if isinstance(altura,float):
+            if altura > 0:
+                self.altura = altura
+            else:
+                raise ValueError ("Altura debe ser mayor que 0")
+        else:
+            raise TypeError ("Altura no es un float")
+
+
+    @property
+    def info(self):
+        imc = self.imc
+        if imc < 18.5:
+            return f"Tu IMC {imc:.2f} está debajo de lo normal"
+        elif imc < 25:
+            return f"Tu IMC {imc:.2f} está en el rango normal"
+        elif imc < 30:
+            return f"Tu IMC {imc:.2f} indica Sobrepeso"
+        else:
+            return f"Tu IMC {imc:.2f} indica Obesidad"
+
+    
