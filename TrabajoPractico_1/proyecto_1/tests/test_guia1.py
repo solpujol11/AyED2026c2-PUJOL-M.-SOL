@@ -1,5 +1,6 @@
 import unittest
-from modules.guia1 import Cuadrado, Persona
+from modules.guia1 import CalculadoraIMC, Persona
+from prueba import Cuadrado
 
 class Test_Cuadrado(unittest.TestCase):
     def test_lado(self):
@@ -23,6 +24,14 @@ class Test_Persona(unittest.TestCase):
     def test_apellido_invalido(self):
         with self.assertRaises(TypeError):
             persona = Persona("amanda",2)
+
+if __name__ == "__main__":
+    unittest.main()
+
+class Test_CalculadoraIMC(unittest.TestCase):
+    def test_peso_invalido(self):
+        with self.assertRaises(TypeError):
+            calculado = CalculadoraIMC("75", 1.80) #cuando a peso le pongo algo que no es un numero debe dar TypeError
 
 if __name__ == "__main__":
     unittest.main()
