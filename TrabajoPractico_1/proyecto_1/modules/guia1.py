@@ -98,20 +98,33 @@ class personaAleatoria(Persona):
         nombre = random.choice(self.NOMBRES)
         apellido = random.choice(self.APELLIDOS)
         super().__init__(nombre,apellido)
+
 class CalculadoraIMC:
-    def __init__(self,peso,altura):
+    def __init__(self, peso, altura):
         self.establecer_altura(altura)
         self.establecer_peso(peso)
+
     def establecer_altura(self, altura):
-        if isinstance(altura,float):
+        if isinstance(altura,(int,float)):
             if altura > 0:
-                self.altura = altura
+                self.altura = float(altura)
             else:
                 raise ValueError ("Altura debe ser mayor que 0")
         else:
             raise TypeError ("Altura no es un float")
 
+    def establecer_peso(self, peso):
+        if isinstance(peso,(int,float)):
+            if peso > 0:
+                self.peso = float(peso)
+            else:
+                raise ValueError ("Peso debe ser mayor que 0")
+        else:
+            raise TypeError ("Peso no es un float")
 
+    @property
+    def imc (self):
+        return self.peso / (self.altura ** 2)
     @property
     def info(self):
         imc = self.imc
