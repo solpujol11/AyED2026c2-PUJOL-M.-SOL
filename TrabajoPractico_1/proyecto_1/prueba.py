@@ -1,4 +1,4 @@
-from guia0 import encontrar_el_maximo
+from modules.guia0 import encontrar_el_maximo
 if __name__ == "__main__":
     lista=[1,"a"]
     maximo=encontrar_el_maximo(lista)

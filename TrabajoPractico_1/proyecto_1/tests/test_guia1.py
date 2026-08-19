@@ -1,5 +1,5 @@
 import unittest
-from guia1 import Cuadrado, Persona
+from modules.guia1 import Cuadrado, Persona
 
 class Test_Cuadrado(unittest.TestCase):
     def test_lado(self):
