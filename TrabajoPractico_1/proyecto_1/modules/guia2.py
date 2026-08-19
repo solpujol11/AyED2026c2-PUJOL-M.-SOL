@@ -11,7 +11,7 @@ def calcular_potencia_dos_iterativo(n):
     return resultado
 
 def calcular_potencia_dos_recursivo(n):
-    if not not isinstance(n,int):
+    if not isinstance(n,int):
         raise TypeError ("El n debe ser un numero entero")
     if n<0:
         raise ValueError ("El n debe ser un numero entero no negativo")
@@ -19,3 +19,14 @@ def calcular_potencia_dos_recursivo(n):
         return 1
     resultado=1
     return 2*calcular_potencia_dos_recursivo(n-1)
+
+def calcular_fibonacci_recursiva(n):
+    if not isinstance(n,int):
+        raise TypeError ("El n debe ser un numero entero")
+    if n<0:
+        raise ValueError ("El n debe ser un numero entero no negativo")
+    if n==0:
+        return 0
+    if n==1:
+        return 1
+    return calcular_fibonacci_recursiva(n-1)+calcular_fibonacci_recursiva(n-2)

@@ -1,5 +1,5 @@
 import unittest
-from modules.guia2 import calcular_potencia_dos_iterativo, calcular_potencia_dos_recursivo 
+from modules.guia2 import calcular_fibonacci_recursiva, calcular_potencia_dos_iterativo, calcular_potencia_dos_recursivo 
 
 class Test_CalculadorPotenciaDosIterativo(unittest.TestCase):
     def test_calculo(self):
@@ -13,3 +13,8 @@ class Test_CalculadorPotenciaDosRecursivo(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class Test_CalculadorPotenciaDosRecursivo(unittest.TestCase):
+    def test_calculo(self):
+        n = 10
+        self.assertEqual(calcular_fibonacci_recursiva(n), 55)
