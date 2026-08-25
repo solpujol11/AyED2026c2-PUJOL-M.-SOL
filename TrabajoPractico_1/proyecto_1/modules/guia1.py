@@ -86,14 +86,52 @@ if __name__ == "__main__":
 #ejercicio 3
 class Persona:
     def __init__(self,nombre,apellido):
+        self.establecer_nombre(nombre)
+        self.establecer_apellido(apellido)
+    def establecer_nombre(self,nuevo_nombre):
+        if isinstance (nuevo_nombre,str):
+            self.__nombre = nuevo_nombre.capitalize()
+        else:
+            raise TypeError ("Nombre no es un str")
+    def establecer_apellido(self,nuevo_apellido):
+        if isinstance (nuevo_apellido,str):
+            self.__apellido = nuevo_apellido.capitalize
+        else:
+            raise TypeError ("Nombre no es un str")
+    #GETTERS
+    def obtener_nombre(self):
+        return self.__nombre
+    def obtener_apellido(self):
+        return self.__apellido
+
+def prueba_persona():
+    p=Persona("sol","pujol")
+    print ("Nombre:", p.obtener_nombre())
+    print ("Apellido:", p.obtener_apellido())
+    try:
+        p_error=Persona(123,"Pujol")
+    except TypeError as e:
+        print("Error detectado:",e)
+
+if __name__ == "__main__":
+    prueba_persona()
+
+#otraforma
+    def __init__(self,nombre,apellido):
         if isinstance(nombre,str):
             if isinstance(apellido,str):
-                self.__nombre = nombre.capitalize()
-                self.__apellido = apellido.capitalize()
+                self.__nombre=nombre.capitalize()
+                self.__apellido=apellido.capitalize()
             else:
-                raise TypeError ("Apellido no es una cadena de caracteres)")
+                raise TypeError ("Nombre no es un string")
         else:
-            raise TypeError ("Nombre no es una cadena de caracteres)")
+            raise TypeError ("Apellido no es un string")
+        
+
+
+
+
+
 
 @property
 def nombre (self):
@@ -118,14 +156,6 @@ if __name__ == "__main__":
     print(persona_aleatoria.nombre,persona_aleatoria.apellido)
     print(PersonaAleatoria.NOMBRES)
 
-class personaAleatoria(Persona):
-    NOMBRES=["amanda","feli","sol"]
-    APELLIDOS=["epson","franco","cabada","pujol"]
-
-    def __init__(self):
-        nombre = random.choice(self.NOMBRES)
-        apellido = random.choice(self.APELLIDOS)
-        super().__init__(nombre,apellido)
 
 class CalculadoraIMC:
     def __init__(self, peso, altura):
