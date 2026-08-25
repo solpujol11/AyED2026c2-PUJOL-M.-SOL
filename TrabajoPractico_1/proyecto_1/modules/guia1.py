@@ -95,7 +95,7 @@ class Persona:
             raise TypeError ("Nombre no es un str")
     def establecer_apellido(self,nuevo_apellido):
         if isinstance (nuevo_apellido,str):
-            self.__apellido = nuevo_apellido.capitalize
+            self.__apellido = nuevo_apellido.capitalize()
         else:
             raise TypeError ("Nombre no es un str")
     #GETTERS
@@ -126,73 +126,113 @@ if __name__ == "__main__":
                 raise TypeError ("Nombre no es un string")
         else:
             raise TypeError ("Apellido no es un string")
-        
 
 
+# ejercicio 4
+class Estudiante:
+    def __init__(self,legajo,apellido,nombre,documento,promedio):
+        self.establecer_legajo(legajo)
+        self.establecer_apellido(apellido)
+        self.establecer_nombre(nombre)
+        self.establecer_documento(documento)
+        self.establecer_promedio(promedio)
+#SETTERS (MÉTODOS PARA ESTABLECER Y VALIDAR)
+    def establecer_legajo(self,nuevo_legajo):
+        try:
+            legajo_int=int(nuevo_legajo)
+            if legajo_int <=0:
+                raise ValueError ("Legajo debe ser mayor que 0")
+            self._legajo=legajo_int
+        except (ValueError,TypeError):
+            raise ValueError ("legajo debe ser un numero valido")
+    def establecer_apellido_nombre(self,nuevo_apellido_nombre):
+        if isinstance(nuevo_apellido_nombre,str):
+            self._apellido_nombre = nuevo_apellido_nombre
+        else:
+            raise TypeError ("Apellido y nombre han de ser str")
+    def establecer_documento(self,nuevo_documento):
+        try:
+            documento_int=int(nuevo_documento)
+            if documento_int<=0:
+                raise ValueError ("Documento ha de ser un numero mayor a 0")
+            self._documento = documento_int
+        except (ValueError,TypeError):
+            raise TypeError("El documento debe ser un número entero válido.")
+    def establecer_promedio(self,nuevo_promedio):
+        try:
+            promedio_float=float(nuevo_promedio)
+            if 0.00<=promedio_float<=10.00:
+                self._promedio=promedio_float
+            else:
+                raise ValueError("Promedio debe ser un numero entre 0 y 10")
+        except(ValueError,TypeError):
+            raise TypeError("Promedio debe ser un flotante valido")
+
+    #GETTERS PARA OBTENER
+    def obtener_legajo(self):
+        return self._legajo
+    def obtener_apellido_nombre(self):
+        return self._apellido_nombre
+    def obtener_documento(self):
+            return self._documento
+    def obtener_promedio(self):
+            return self._promedio
+
+    #LECTURA Y PROCESAMIENTO DEL ARCHIVO
+def cargar_y_ordenar_estudiantes(ruta_archivo):
+    estudiantes = []
+
+    try:
+        with open(ruta_archivo, mode='r', encoding='utf-8') as archivo:
+            for linea in archivo:
+                linea = linea.strip()
+                
+                # Si la línea no está vacía, la procesamos
+                if linea:
+                    partes = linea.split(',')
+                    
+                    # Verificamos que tenga los 4 datos
+                    if len(partes) == 4:
+                        try:
+                            # Creamos el estudiante con sus datos
+                            est = Estudiante(partes[0], partes[1], partes[2], partes[3])
+                            estudiantes.append(est)
+                        except (TypeError, ValueError) as error:
+                            print("Dato inválido ignorado:", error)
+
+    except FileNotFoundError:
+        print("No se encontró el archivo")
+        return []
+
+    estudiantes.sort(key=lambda est: est.obtener_legajo())
+    return estudiantes
 
 
+def prueba_estudiantes():
+    lista = cargar_y_ordenar_estudiantes("estudiantes.txt")
 
+    for est in lista:
+        print("Legajo:", est.obtener_legajo(), 
+              "| Nombre:", est.obtener_apellido_y_nombre(), 
+              "| DNI:", est.obtener_documento(), 
+              "| Promedio:", est.obtener_promedio())
 
-@property
-def nombre (self):
-    return self.__nombre
-
-@property
-def apellido (self):
-    return self.__apellido
-
-import random
-class PersonaAleatoria(Persona):
-    NOMBRES=["amanda","feli","sol"]
-    APELLIDOS=["epson","franco","cabada","pujol"]
-
-    def __init__(self):
-        nombre = random.choice(self.NOMBRES)
-        apellido = random.choice(self.APELLIDOS)
-        super().__init__(nombre,apellido) #llamar a su clase madre (persona) y llama al init de la clase madre
 
 if __name__ == "__main__":
-    persona_aleatoria = PersonaAleatoria()
-    print(persona_aleatoria.nombre,persona_aleatoria.apellido)
-    print(PersonaAleatoria.NOMBRES)
+    prueba_estudiantes()
 
+#ejercicio 5
+import random
+class Persona_Aleatoria(Persona):
+    NOMBRE=["sol","juli","maxi","pri","anita","maga"]
+    APELLIDO=["pujol","fumero","forni","beltramino","bosco","diaz"]
+    def __init__(self):
+        nombre=random.choice(self.NOMBRE)
+        apellido=random.choice(self.APELLIDO)
+        super().__init__(nombre,apellido) #llamar a su clase madre (persona) y llama al init de la clase madre
+if __name__ == "__main__":
+    personaaleatoria=Persona_Aleatoria()
+    print(personaaleatoria.obtener_nombre(),personaaleatoria.obtener_apellido())
 
-class CalculadoraIMC:
-    def __init__(self, peso, altura):
-        self.establecer_altura(altura)
-        self.establecer_peso(peso)
-
-    def establecer_altura(self, altura):
-        if isinstance(altura,(int,float)):
-            if altura > 0:
-                self.altura = float(altura)
-            else:
-                raise ValueError ("Altura debe ser mayor que 0")
-        else:
-            raise TypeError ("Altura no es un float")
-
-    def establecer_peso(self, peso):
-        if isinstance(peso,(int,float)):
-            if peso > 0:
-                self.peso = float(peso)
-            else:
-                raise ValueError ("Peso debe ser mayor que 0")
-        else:
-            raise TypeError ("Peso no es un float")
-
-    @property
-    def imc (self):
-        return self.peso / (self.altura ** 2)
-    @property
-    def info(self):
-        imc = self.imc
-        if imc < 18.5:
-            return f"Tu IMC {imc:.2f} está debajo de lo normal"
-        elif imc < 25:
-            return f"Tu IMC {imc:.2f} está en el rango normal"
-        elif imc < 30:
-            return f"Tu IMC {imc:.2f} indica Sobrepeso"
-        else:
-            return f"Tu IMC {imc:.2f} indica Obesidad"
-
+#ejercicio 6
     
