@@ -235,4 +235,233 @@ if __name__ == "__main__":
     print(personaaleatoria.obtener_nombre(),personaaleatoria.obtener_apellido())
 
 #ejercicio 6
+class Producto:
+    def __init__(self,nombre,precio,unidades):
+        self.establecer_nombre(nombre)
+        self.establecer_precio(precio)
+        self.establecer_unidades(unidades)
+        self.__descuento = 0
+
+    def establecer_nombre(self,nombre_final):
+        if isinstance(nombre_final,str):
+            self.__nombre = nombre_final
+        else:
+            raise TypeError ("Nombre debe ser un string")
+    def establecer_precio(self,precio_final):
+        if isinstance(precio_final,(int,float)):
+            if precio_final>=0:
+                self.__precio = precio_final
+            else:
+                raise ValueError ("Precio debe ser un numero mayor a 0")
+        else:
+            raise TypeError ("Precio debe ser un numero")
+    def establecer_unidades(self,unidades_final):
+        if isinstance(unidades_final,int):
+            if unidades_final>=0:
+                self.__unidades = unidades_final
+            else:
+                raise ValueError("Unidades debe ser mayor a 0")
+        else:
+            raise TypeError("Unidades debe ser un numero entero")
+    def establecer_descuento(self,porcentaje):
+        if isinstance(porcentaje,(int,float)) and 0<=porcentaje<=100:
+            self.__descuento = porcentaje
+        else:
+            raise ValueError ("El porcentaje debe ser un numero entre 0 y 100")
+
+    def obtener_nombres(self):
+        return self.__nombre
+    def obtener_precio(self):
+        return self.__precio
+    def obtener_unidades(self):
+        return self.__unidades
+    def descuento_final(self):
+        monto_descuento = self.__precio * (self.__descuento / 100)
+        return self.__precio - monto_descuento
+    def mostrar_todo(self):
+        print(f"Producto: {self.obtener_nombres()}, "
+              f"Precio: {self.obtener_precio()}, "
+              f"Precio con Desc: {self.descuento_final()}, "
+              f"Unidades: {self.obtener_unidades()}")
+
+def Prueba_Producto():
+    p=Producto("tijera",300,15)
+    p.mostrar_todo()
+    print("PRECIO CON DESCUENTO")
+    p.establecer_descuento(15)
+    p.mostrar_todo()
+    print("MODIFICANDO")
+    p.establecer_precio(400)
+    p.establecer_unidades(500)
+    p.mostrar_todo()
+    print("ERRORES")
+    try:
+        p_error=Producto(123,"Pujol",-10)
+    except TypeError as e:
+        print("Error detectado:",e)
+
+if __name__ == "__main__":
+    Prueba_Producto()
+
+#ejercicio 7
+class CalculadoraIMC:
+    def __init__(self,peso,altura):
+        self.establecer_peso(peso)
+        self.establecer_altura(altura)
+
+    def establecer_peso(self,peso_final):
+        if isinstance(peso_final,(int,float)):
+            if peso_final >0:
+                self.peso=peso_final
+            else:
+                raise ValueError("Peso debe ser mayor a 0Kg")
+        else:
+            raise TypeError("Peso debe ser un numero")
+        
+    def establecer_altura(self,altura_final):
+        if isinstance(altura_final,(int,float)) and altura_final>0:
+            self.altura = float(altura_final)
+        else:
+            raise TypeError("Altura debe ser un float  mayor que 0")
+    @property
+    def imc(self):
+        return self.peso/(self.altura**2)
+    @property
+    def darinfo(self):
+        imc=self.imc
+        if imc < 18.5:
+            return f"Tu IMC {imc:.2f} está debajo de lo normal"
+        elif imc < 25:
+            return f"Tu IMC {imc:.2f} está en el rango normal"
+        elif imc < 30:
+            return f"Tu IMC {imc:.2f} indica Sobrepeso"
+        else:
+            return f"Tu IMC {imc:.2f} indica Obesidad"
+
+def prueba_imc():
+    p=CalculadoraIMC(61,1.67)
+    print(p.darinfo)
+
+if __name__ == "__main__":
+    prueba_imc()
+
+#ejercicio 8
+class analizar_texto:
+    CARACTERES = (',', '.', ':', ';', '-', '_')
+
+    def __init__(self,texto):
+        self.establecer_texto(texto)
+
+    def establecer_texto(self,texto_nuevo):
+        if isinstance(texto_nuevo,str):
+            self.texto=texto_nuevo
+            self.depurado=self.depurar(texto_nuevo)
+        else:
+            raise TypeError("El texto debe ser una cadena de string")
+
+    def depurar(self,texto):
+        texto_depurado=texto
+        for caracteres in self.CARACTERES:
+            texto_depurado = texto_depurado.replace(caracteres," ")
+        return (texto_depurado)
+
+    def obtener_palabras(self):
+        return self.depurado.lower()
+    def obtener_texto(self):
+        return self.texto
+    def obtener_depurado(self):
+        return self.depurado
+    def obtener_total_palabras(self):
+        return len(self.obtener_palabras())
+
+def prueba_palabra():
+    texto_prueba = ("Hola, mundo: este es un texto-de prueba; sí, un_texto de prueba.")
+    p = analizar_texto(texto_prueba)
     
+    print(f"Original: {p.obtener_texto()}")
+    print(f"Depurado: {p.obtener_depurado()}")
+    print(f"Número total de palabras: {p.obtener_total_palabras()}")
+    print("ERRORES")
+    try:
+        p("   ")
+    except TypeError as e:
+        print(f"Error detectado en inicialización: {e}")
+
+if __name__ == "__main__":
+    prueba_palabra()
+
+#ejercicio 9
+class Temperatura:
+    UNIDADES = ("C", "K", "F")
+    def __init__(self,temperatura,escala):
+        self.establecer_temperatura(temperatura,escala)
+
+    def establecer_temperatura(self,temperatura,escala):
+        if not isinstance(temperatura,(int,float)):
+            raise TypeError ("Temperatura debe ser un numero")
+        if not isinstance(escala,str):
+            raise TypeError ("La escala debe ser un string")
+        escala=escala.upper()
+        if escala not in self.UNIDADES:
+            raise ValueError("La unidad no es valida")
+
+        temperatura_kelvin=self.kelvin(float(temperatura),escala)
+        if temperatura_kelvin <0:
+            raise ValueError ("Calculo fisicamente no realizable")
+
+        self.temperatura=float(temperatura)
+        self.escala=escala
+
+    def kelvin(self,temperatura,escala):
+        if escala == "K":
+            return temperatura
+        elif escala == "C":
+            return temperatura+273.15
+        elif escala == "F":
+            return (temperatura+459.67)*5/9
+
+    def a_otra(self,kelvin,escala_final):
+        if escala_final == 'K':
+            return kelvin
+        elif escala_final == 'C':
+            return kelvin - 273.15
+        elif escala_final == 'F':
+            return (kelvin * 9 / 5) - 459.67
+
+    def obtener_temperatura(self):
+        return self.temperatura
+
+    def obtener_escala(self):
+        return self.escala
+
+    def escala_destino(self,escala_final):
+        if not isinstance(escala_final, str):
+            raise TypeError("La escala final debe ser un texto.")
+
+        final = escala_final.upper()
+        if final not in self.UNIDADES:
+            raise ValueError("Unidad no válida")
+        if final == self.escala:
+            return self.temperatura
+        temp_kelvin = self.kelvin(self.temperatura, self.escala)
+        return self.a_otra(temp_kelvin, final)
+
+def prueba():
+    temp = Temperatura(25, 'C')
+    print(f"25°C a Kelvin: {temp.escala_destino('K'):.2f} K")
+    print(f"25°C a Fahrenheit: {temp.escala_destino('F'):.2f} °F")
+    print(f"25°C a Celsius (misma unidad): {temp.escala_destino('C')} °C")
+
+    try:
+        Temperatura(-300, 'C')
+    except ValueError as e:
+        print("Error detectado (< 0 K):", e)
+
+    try:
+        Temperatura(100, 'X')
+    except ValueError as e:
+        print("Error detectado (Unidad inválida):", e)
+
+if __name__ == "__main__":
+    prueba()
+        
